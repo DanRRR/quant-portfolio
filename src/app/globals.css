@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-bg: #0b0d10;
+  --color-surface: #111418;
+  --color-border: #1f242b;
+  --color-fg: #e6e8eb;
+  --color-fg-muted: #9aa3ad;
+  --color-accent: #4ade80; /* a quant-friendly green */
+  --color-accent-muted: #166534;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* MDX code blocks (rehype-pretty-code) */
+code,
+pre {
+  font-family: var(--font-mono);
+}
+pre {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+:not(pre) > code {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+  font-size: 0.9em;
+}

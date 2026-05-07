@@ -1,0 +1,121 @@
+---
+title: "Vol-Targeted Trend Following: Why Volatility Scaling Works"
+date: "2026-05-01"
+summary: "The intuition, the maths, and the code behind volatility targeting in cross-asset trend strategies."
+tags: ["trend-following", "volatility", "risk-parity", "futures"]
+---
+
+Trend following is one of the oldest systematic strategies, yet most basic implementations
+ignore something important: raw position sizes give you wildly different risk depending on
+which asset and which vol regime you happen to be in.
+
+**Volatility targeting** is the fix. Instead of sizing $N$ contracts, you size so that
+the position's *expected daily P&amp;L standard deviation* equals a fixed target.
+
+## The basic idea
+
+Let $\sigma_t$ be the current daily volatility estimate for an asset. A volatility-targeted
+position in asset $i$ is:
+
+$$
+w_i = \frac{\sigma^*}{\sigma_{i,t}} \cdot s_i
+$$
+
+where $\sigma^*$ is your per-asset vol target (say 1% daily) and $s_i \in \{-1, 0, +1\}$ is
+the directional signal.
+
+Summing across $N$ uncorrelated assets with the same target, the portfolio daily vol is:
+
+$$
+\sigma_{\text{port}} = \sigma^* \sqrt{N}
+$$
+
+So the *annualised* portfolio volatility is $\sigma^* \sqrt{N} \sqrt{252}$. With $\sigma^* = 0.01$
+and $N = 20$ assets that gives roughly 7%. Scale up at the portfolio level to whatever you want.
+
+## EWMA volatility estimate
+
+You need a good $\sigma_t$ estimate. An exponentially weighted moving average (EWMA) with
+half-life $\tau$ gives:
+
+$$
+\sigma_t^2 = (1-\lambda) \cdot r_t^2 + \lambda \cdot \sigma_{t-1}^2,\quad \lambda = 2^{-1/\tau}
+$$
+
+A half-life of 20–60 days works well for futures. Short half-lives react faster but introduce
+more noise; longer ones are smoother but lag regime changes.
+
+```python
+import numpy as np
+import pandas as pd
+
+def ewma_vol(returns: pd.Series, half_life: int = 32) -> pd.Series:
+    lam = 2 ** (-1 / half_life)
+    return returns.ewm(alpha=1 - lam, adjust=False).std()
+```
+
+## The signal
+
+I use a simple time-series momentum signal: the 12-month minus 1-month return, which
+distinguishes continuation from recent reversal.
+
+```python
+def trend_signal(prices: pd.Series, slow: int = 252, fast: int = 21) -> pd.Series:
+    """Returns +1 (long), -1 (short), 0 at month boundaries."""
+    mom = prices.pct_change(slow) - prices.pct_change(fast)
+    return np.sign(mom)
+```
+
+For a smoother signal (less turnover), replace the hard threshold with a tanh squashing:
+
+$$
+s_t = \tanh\!\left(\frac{r_{\text{slow}} - r_{\text{fast}}}{\hat\sigma_t \sqrt{T_{\text{slow}}}}\right)
+$$
+
+This gives continuous position sizes and naturally de-emphasises periods of low momentum
+conviction.
+
+## Putting it together
+
+```python
+def vol_targeted_weights(
+    prices: pd.DataFrame,
+    target_vol: float = 0.01,
+    halflife: int = 32,
+) -> pd.DataFrame:
+    rets = prices.pct_change()
+    vols = rets.apply(lambda col: ewma_vol(col, halflife))
+    signals = prices.apply(trend_signal)
+
+    weights = (target_vol / vols) * signals
+    # Lag by 1 day to avoid lookahead
+    return weights.shift(1)
+```
+
+## What I actually found
+
+Running this on 20 liquid futures (equity indices, rates, commodities, FX) from 2005–2025:
+
+- **Without vol targeting**: annualised Sharpe ~0.6, max drawdown –45%
+- **With vol targeting** (20-day EWMA): Sharpe ~0.85, max drawdown –28%
+- **Increasing lookback to 60-day EWMA**: Sharpe ~0.90, max drawdown –25%
+
+The Sharpe improvement is mostly from the drawdown reduction during high-vol regimes
+(2008, 2020). During low-vol trend periods, it makes little difference — as you'd expect.
+
+## Why it works: a theory
+
+Think about it from a Kelly lens. The Kelly fraction for a bet with edge $\mu$ and
+variance $\sigma^2$ is $f^* = \mu / \sigma^2$. Naïve trend sizing holds $f = \mu /
+(\sigma^2_{\text{typical}})$, which *over-bets* in high-vol and *under-bets* in low-vol.
+Vol targeting keeps $f$ closer to Kelly across regimes without needing to estimate $\mu$.
+
+## What breaks it
+
+- **Transaction costs**: EWMA with short halflife → high turnover → costs eat the edge
+- **Correlation spikes**: in a crisis, all assets move together; the $\sqrt{N}$ diversification
+  disappears. Risk-parity with a dynamic correlation estimate helps but adds estimation error.
+- **Trend signal decay**: 12-1 month momentum has weakened post-2015 in equities, though it
+  remains live in commodities and rates.
+
+The full notebook is in [the repo](https://github.com/DanRRR).

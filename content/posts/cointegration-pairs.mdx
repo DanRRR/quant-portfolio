@@ -1,0 +1,54 @@
+---
+title: "Cointegration-Based Pairs Trading: From OU Process to Live PnL"
+date: "2026-04-22"
+summary: "From Engle–Granger to a working backtest, with the math, the code, and where the assumptions break."
+tags: ["pairs", "stat-arb", "statsmodels"]
+---
+
+A classic pairs trade rests on the idea that, while two stocks $X_t$ and $Y_t$ may
+each be non-stationary, a linear combination
+
+$$
+Z_t = Y_t - \beta X_t
+$$
+
+can be stationary — i.e. mean-reverting. If $Z_t$ behaves like an Ornstein–Uhlenbeck
+process
+
+$$
+dZ_t = \kappa (\mu - Z_t)\, dt + \sigma\, dW_t,
+$$
+
+we can size positions proportional to the z-score and earn the spread's mean reversion.
+
+## Estimating $\beta$
+
+We start with the Engle–Granger procedure: regress $Y$ on $X$ to obtain
+$\hat{\beta}$, then test the residual for stationarity using ADF.
+
+```python
+import statsmodels.api as sm
+from statsmodels.tsa.stattools import adfuller
+
+X = sm.add_constant(x)
+beta_hat = sm.OLS(y, X).fit().params[1]
+spread = y - beta_hat * x
+
+stat, pval, *_ = adfuller(spread)
+```
+
+If $p < 0.05$, we treat the pair as cointegrated for the in-sample window.
+
+## Trade rule
+
+Define the rolling z-score $z_t = (Z_t - \bar{Z}_w) / \hat\sigma_w$ over a window $w$.
+Enter when $|z_t| > 2$, exit when $|z_t| < 0.5$, and stop out on $|z_t| > 4$.
+Allocate dollar-neutral: long 1 unit of $Y$, short $\hat\beta$ units of $X$.
+
+## What I learned by breaking it
+
+- **Out-of-sample $\hat\beta$ drifts** — refitting weekly halves the drawdown.
+- **Survivorship bias** — using a static S&P 500 list inflates Sharpe by ~30%.
+- **Costs eat the tails** — at 5 bps round-trip, the marginal pairs go negative.
+
+A reproducible notebook is in the [GitHub repo](https://github.com/DanRRR).
