@@ -11,13 +11,6 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Alpha Research at WorldQuant BRAIN",
-    blurb:
-      "Developing quantitative alphas for the WorldQuant BRAIN platform as a part-time Research Consultant. Signals span cross-sectional momentum, short-term mean reversion, and fundamental factor combinations across global equity markets. Focus on IC consistency and low correlation to standard risk factors.",
-    status: "in-progress",
-    tags: ["Python", "Cross-sectional", "Alpha research", "WorldQuant"],
-  },
-  {
     title: "Cointegration-Based Pairs Trading (US Equities)",
     blurb:
       "Daily stat-arb strategy on liquid US equities using Engle–Granger cointegration. Spread modelled as an Ornstein–Uhlenbeck process; positions sized by z-score with dynamic entry/exit bands. Rolling re-estimation every 5 days reduces beta drift. Out-of-sample Sharpe ~1.2 after 5 bps round-trip costs.",

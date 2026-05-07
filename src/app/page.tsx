@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import MarketSnapshot from "@/components/widgets/MarketSnapshot";
 import { getAllPosts } from "@/lib/posts";
 
 const AFFILIATIONS = [
@@ -99,16 +98,6 @@ export default async function HomePage() {
             LinkedIn
           </a>
         </div>
-      </section>
-
-      {/* ── Market snapshot ── */}
-      <section className="space-y-3">
-        <h2 className="text-xl font-semibold">Live market snapshot</h2>
-        <p className="text-sm text-[var(--color-fg-muted)]">
-          Equity indices, rates, and vol — fetched on each load via a Python
-          serverless function on Vercel.
-        </p>
-        <MarketSnapshot />
       </section>
 
       {/* ── Recent writing ── */}
