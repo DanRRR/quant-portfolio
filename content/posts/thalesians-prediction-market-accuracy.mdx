@@ -1,0 +1,97 @@
+---
+title: "The Thalesians Seminar Notes: Prediction Market Accuracy"
+date: "2026-09-09"
+summary: "Notes on prediction-market accuracy, information constraints, and recurring behavioural biases."
+category: "Seminar Notes"
+tags:
+  [
+    "prediction markets",
+    "market efficiency",
+    "behavioural finance",
+    "forecasting",
+  ]
+reference: "https://thalesians.com/seminars/"
+published: false
+---
+
+These are selective personal notes from a New York talk hosted by **The Thalesians**, which I attended remotely from London. They are not intended as a complete transcript.
+
+---
+
+## Talk details
+
+- **Topic:** Prediction Market Accuracy
+- **Format:** Remote attendance from London
+- **Event location:** New York
+- **Speaker:** [Confirm whether the speaker was I. Jensen or Harvey Stein]
+- **Affiliation:** [Confirm affiliation; Two Sigma was mentioned in my notes]
+
+## Summary
+
+The talk considered when prediction-market prices provide accurate forecasts and where their interpretation becomes less reliable. The central tension is that markets aggregate dispersed information, but the quality of that aggregation depends on participation, incentives, liquidity and recurring behavioural biases.
+
+## Measuring accuracy
+
+Prediction-market performance should be assessed over repeated observations rather than through a small number of striking successes or failures. My notes refer to **quarter-by-quarter comparisons involving Two Sigma, AQR and Fidelity**, although the precise dataset and comparison require confirmation.
+
+Questions to clarify from the source material:
+
+- What definition of accuracy was used?
+- Were market probabilities evaluated for calibration, discrimination, or both?
+- What was the benchmark forecast?
+- How stable were the results from one quarter to the next?
+
+For a binary event with market-implied probability $p$ and outcome $y \in \{0,1\}$, one possible evaluation measure is the Brier score:
+
+$$
+\operatorname{BS}=(p-y)^2.
+$$
+
+Lower average scores indicate more accurate probabilistic forecasts, but this metric alone does not identify _why_ a market was accurate or inaccurate.
+
+## Information and market size
+
+One point concerned the limits placed on insiders. If informed participation is restricted, the effect may be especially pronounced in smaller markets, where fewer independent participants are available to incorporate dispersed information into prices.
+
+This suggests that prediction-market accuracy may depend not only on whether relevant information exists, but also on:
+
+- who is permitted or willing to trade;
+- how concentrated the information is;
+- the depth and liquidity of the market;
+- whether informed traders have sufficient incentives to participate.
+
+## Behavioural effects
+
+Crowd forecasts are not automatically free from systematic error. The talk discussed whether recurring behavioural mistakes can create predictable distortions that informed participants may exploit.
+
+### Favourite-longshot bias
+
+My notes highlight the **favourite-longshot bias**: market participants may overvalue low-probability, high-payoff outcomes while undervaluing favourites. If persistent after costs, this can produce a gap between quoted probabilities and realised frequencies.
+
+### Payout structure
+
+[Clarify the note recorded as “tiger payout”: was this a tiered, winner-takes-all, or another payout design?]
+
+The payout mechanism matters because it shapes participation and risk-taking. Different contract designs may encourage speculation, hedging or information revelation in different ways.
+
+## My interpretation
+
+Prediction markets are best viewed as **information-aggregation mechanisms with design constraints**, rather than as mechanically accurate forecasting tools. Their output depends on who participates, what those participants know, how they are rewarded and which behavioural tendencies remain in the price.
+
+This makes market accuracy an empirical question. A convincing evaluation should examine calibration through time, compare against meaningful benchmarks and separate information advantages from artefacts of liquidity or contract design.
+
+## Questions left open
+
+- How much does accuracy deteriorate when informed participants are restricted?
+- Are smaller prediction markets more vulnerable to manipulation or simply noisier?
+- Does favourite-longshot bias survive fees and realistic position limits?
+- Which market-scoring rule best distinguishes genuine information aggregation from crowd consensus?
+- Were the Two Sigma, AQR and Fidelity results forecasts, investment views, or another quarterly comparison?
+
+## Follow-up
+
+- [ ] Confirm the event date, speaker and affiliation.
+- [ ] Verify the quarter-by-quarter comparison and add its source.
+- [ ] Clarify the payout-design note.
+- [ ] Add any slides, recording or paper referenced during the talk.
+- [ ] Remove this checklist and change `published: false` to `published: true` when ready.

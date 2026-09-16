@@ -1,0 +1,71 @@
+---
+title: "LQG Seminar Notes: Lock, Stock and Virtual Barrels"
+date: "2025-11-11"
+summary: "Storage, stochastic inventories, risk premia, and option trading in quantitative oil markets."
+category: "Seminar Notes"
+tags: ["oil markets", "commodities", "risk premia", "options"]
+reference: "https://lqg.org.uk/events/2025/lqg-2025-11-11-1830-lock-stock-and-virtual-barrels-ilia-bouchouev-ip-olo-hybrid/"
+published: false
+---
+
+These are selective personal notes from a hybrid London Quant Group seminar hosted by Snowflake. They are not intended as a complete transcript.
+
+---
+
+## Seminar details
+
+- **Speaker:** Ilia Bouchouev
+- **Affiliation:** Pentathlon Investments
+- **Format:** In-person and online
+- **Host:** Snowflake
+
+## Summary
+
+The seminar presented oil as a market in which physical storage is central to quantitative modelling and trading.[^1] Rather than treating spot prices as an isolated financial process, the framework relates them to stochastic inventories bounded by two economically important states: **stock-outs**, when inventories approach zero, and **tank-tops**, when storage approaches capacity.
+
+This storage perspective provides a common foundation for understanding price behaviour, momentum and carry, option strategies, and the volatility smile.
+
+## Oil as a derivative of inventory
+
+Inventories connect present supply and demand with expectations about future scarcity. Their physical bounds introduce nonlinear behaviour:
+
+- near a stock-out, an additional unit of inventory can become especially valuable;
+- near tank-top conditions, storage capacity is scarce and excess supply becomes difficult to absorb;
+- between the boundaries, storage decisions transmit information across maturities.
+
+The episode of negative oil prices illustrates why physical constraints cannot be treated as a minor detail. When delivery obligations meet scarce storage capacity, prices can move outside the range suggested by models designed for purely financial assets.
+
+## Momentum, carry, and the theory of storage
+
+The seminar connected common risk-premia strategies to inventory conditions. Momentum and carry returns in oil are not only statistical patterns; they can reflect the economics of scarcity, storage costs and the shape of the futures curve.
+
+This suggests that a robust commodity strategy should distinguish between:
+
+- a historical return pattern;
+- the physical state that may generate it;
+- compensation for bearing inventory-related risk;
+- implementation costs and changing market regimes.
+
+The economic mechanism matters because the same signal may behave differently near stock-out and tank-top boundaries.
+
+## Options and volatility trading
+
+The discussion then moved from futures to options, including gamma trading and the volatility risk premium. A key modelling challenge is to describe the oil volatility smile while respecting the asymmetric and state-dependent behaviour created by storage constraints.
+
+The seminar introduced a **quadratic normal model** as a practical framework for the volatility smile and its use in trading. A useful follow-up would be to compare its fit, stability and hedging performance with more conventional option models across different inventory regimes.
+
+## My interpretation
+
+The strongest takeaway is that quantitative commodity trading benefits from joining statistical models to the underlying physical system. Inventory provides an economic state variable that can connect spot prices, the futures curve, risk premia and option-implied volatility.
+
+For strategy research, this argues against testing momentum, carry or volatility signals in isolation. Conditioning their performance on inventories, storage constraints and curve shape may produce a more faithful account of when the strategies work and which risks they compensate.
+
+## Questions left open
+
+- How should inventory data be filtered when measurements are delayed or noisy?
+- Can stock-out and tank-top regimes be inferred reliably from market prices alone?
+- How stable are momentum and carry premia after conditioning on inventory states?
+- Does the quadratic normal model improve out-of-sample hedging as well as smile fit?
+- How transferable is the framework from oil to other storable commodities?
+
+[^1]: Bouchouev, I. (2024). *Virtual Barrels: Quantitative Trading in the Oil Market*. Springer. [Book information](https://www.amazon.com/Virtual-Barrels-Quantitative-Springer-Economics/dp/3031361504).

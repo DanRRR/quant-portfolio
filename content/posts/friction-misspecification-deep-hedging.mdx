@@ -8,7 +8,7 @@ reference: "https://github.com/DanRRR/Deep_hedging_with_transaction_costs"
 
 A hedging policy is only useful if it survives the market in which it is deployed. In frictionless models, the main problem is residual risk. With execution costs, the policy must also decide whether a hedge adjustment is worth paying for.
 
-This project studies a sharper form of model risk: **friction misspecification**. A neural network is trained under one execution-cost specification and then deployed under another. The question is not only whether the hedge becomes more expensive, but whether the learned control rule itself changes.
+This project adopts the *Deep Hedging* framework of Buehler et al., in which neural networks learn hedging policies under market frictions and nonlinear risk objectives.[^1] It studies a sharper form of model risk: **friction misspecification**. A neural network is trained under one execution-cost specification and then deployed under another. The question is not only whether the hedge becomes more expensive, but whether the learned control rule itself changes.
 
 ## Discrete-time hedging with frictions
 
@@ -63,7 +63,7 @@ $$
 
 where $\varphi_k = 1$ means full correction and $\varphi_k = 0$ means no adjustment.
 
-## Main lesson
+## Results from my experiments
 
 Moderate misspecification around the matched friction level produces relatively limited regret in the studied setting. Large overestimation, however, can suppress trading or delay hedge adjustment, leaving exposures that would have been economical to correct.
 
@@ -77,3 +77,5 @@ The asymmetry matters. Underestimating costs may lead to excessive trading and u
 - Neural-network performance should therefore be reported across a deployment grid, not only at the training specification.
 
 The full report and implementation are available in the [Deep Hedging with Transaction Costs repository](https://github.com/DanRRR/Deep_hedging_with_transaction_costs).
+
+[^1]: Buehler, H., Gonon, L., Teichmann, J., and Wood, B. (2019). “Deep Hedging.” *Quantitative Finance*, 19(8), 1271–1291. [https://doi.org/10.1080/14697688.2019.1571683](https://doi.org/10.1080/14697688.2019.1571683).
