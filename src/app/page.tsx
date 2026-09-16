@@ -1,126 +1,65 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
-
-const AFFILIATIONS = [
-  {
-    name: "WorldQuant BRAIN",
-    role: "Research Consultant",
-    logo: "/logos/worldquant.jpeg",
-    href: "https://www.worldquantbrain.com/",
-  },
-  {
-    name: "Bayes Business School",
-    role: "MSc Mathematical Trading & Finance",
-    logo: "/logos/bayes.jpg",
-    href: "https://www.bayes.citystgeorges.ac.uk/",
-  },
-  {
-    name: "University of Leeds",
-    role: "BSc Computer Science",
-    logo: "/logos/leeds.jpeg",
-    href: "https://eps.leeds.ac.uk/computing",
-  },
-];
+import { education, experience, links, profile, projects } from "@/data/site";
 
 export default async function HomePage() {
-  const posts = (await getAllPosts()).slice(0, 3);
-
+  const posts = (await getAllPosts()).slice(0, 2);
   return (
-    <div className="space-y-14">
-      {/* ── Hero ── */}
-      <section className="space-y-5">
-        <div className="flex items-center gap-5">
-          <Image
-            src="/hero.jpg"
-            alt="Thiraphat Dan Ruksujarit"
-            width={72}
-            height={72}
-            className="rounded-full object-cover ring-1 ring-[var(--color-border)]"
-          />
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight leading-tight">
-              Thiraphat (Dan) Ruksujarit
-            </h1>
-            <p className="text-sm text-[var(--color-fg-muted)] mt-0.5">
-              Quantitative Researcher · London
-            </p>
+    <div className="page-stack">
+      <section className="intro-grid">
+        <div className="portrait-wrap">
+          <Image src="/hero.jpg" alt="Thiraphat Dan Ruksujarit" width={370} height={370} priority className="portrait" />
+          <p className="portrait-caption">London, UK</p>
+        </div>
+        <div className="intro-copy">
+          <p className="eyebrow">Quantitative finance · Computer science</p>
+          <h1>{profile.name}</h1>
+          <p className="lede">{profile.summary}</p>
+          <p>{profile.interests}</p>
+          <div className="text-links" aria-label="Profile links">
+            <a href={links.github} target="_blank" rel="noreferrer">GitHub</a>
+            <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href={`mailto:${profile.email}`}>Email</a>
+            <Link href="/cv">Curriculum vitae</Link>
           </div>
-        </div>
-
-        <p className="text-base text-[var(--color-fg-muted)] leading-relaxed">
-          MSc Mathematical Trading &amp; Finance candidate at Bayes Business
-          School. Building systematic strategies at the intersection of
-          stochastic modelling, machine learning, and market microstructure.
-          Writing about the math, code, and edge cases behind each idea.
-        </p>
-
-        {/* Affiliations */}
-        <div className="flex flex-wrap gap-4">
-          {AFFILIATIONS.map((a) => (
-            <a
-              key={a.name}
-              href={a.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] no-underline hover:border-[var(--color-accent-muted)] group"
-            >
-              <Image
-                src={a.logo}
-                alt={a.name}
-                width={20}
-                height={20}
-                className="rounded-sm object-contain opacity-80 group-hover:opacity-100"
-              />
-              <span className="text-xs leading-tight">
-                <span className="block text-[var(--color-fg)] font-medium">{a.name}</span>
-                <span className="block text-[var(--color-fg-muted)]">{a.role}</span>
-              </span>
-            </a>
-          ))}
-        </div>
-
-        {/* CTA buttons */}
-        <div className="flex flex-wrap gap-2 pt-1 text-sm">
-          <Link href="/projects" className="px-3 py-1.5 rounded-md border border-[var(--color-border)] no-underline hover:bg-[var(--color-surface)]">
-            Projects
-          </Link>
-          <Link href="/blog" className="px-3 py-1.5 rounded-md border border-[var(--color-border)] no-underline hover:bg-[var(--color-surface)]">
-            Blog
-          </Link>
-          <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border border-[var(--color-border)] no-underline hover:bg-[var(--color-surface)]">
-            CV
-          </a>
-          <a href="https://github.com/DanRRR" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border border-[var(--color-border)] no-underline hover:bg-[var(--color-surface)]">
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/thiraphat-ruksujarit/" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border border-[var(--color-border)] no-underline hover:bg-[var(--color-surface)]">
-            LinkedIn
-          </a>
         </div>
       </section>
 
-      {/* ── Recent writing ── */}
-      <section className="space-y-4">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-xl font-semibold">Recent writing</h2>
-          <Link href="/blog" className="text-sm">All posts →</Link>
-        </div>
-        <ul className="space-y-3">
-          {posts.map((p) => (
-            <li key={p.slug} className="border-b border-[var(--color-border)] pb-3">
-              <Link href={`/blog/${p.slug}`} className="no-underline group">
-                <div className="font-medium text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">{p.title}</div>
-                <div className="text-sm text-[var(--color-fg-muted)] mt-0.5">
-                  {p.date} · {p.summary}
-                </div>
-              </Link>
-            </li>
+      <section className="home-section">
+        <div className="section-title-row"><h2>Current</h2><Link href="/experience">Full experience →</Link></div>
+        <div className="compact-list">
+          {[experience[0], education[0]].map((item) => (
+            <article key={item.organisation} className="compact-row">
+              <p className="date-label">{item.period}</p>
+              <div><h3>{item.title}</h3><p>{item.organisation}</p></div>
+            </article>
           ))}
-          {posts.length === 0 && (
-            <li className="text-sm text-[var(--color-fg-muted)]">Posts coming soon.</li>
-          )}
-        </ul>
+        </div>
+      </section>
+
+      <section className="home-section">
+        <div className="section-title-row"><h2>Selected research</h2><Link href="/research">All research →</Link></div>
+        <div className="work-list">
+          {posts.map((post) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="work-row work-row-link">
+              <div><p className="eyebrow">Research note · {post.date}</p><h3>{post.title}</h3><p>{post.summary}</p></div>
+              <span className="work-row-arrow" aria-hidden="true">↗</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section">
+        <div className="section-title-row"><h2>Selected projects</h2><Link href="/projects">All projects →</Link></div>
+        <div className="work-list">
+          {projects.map((project) => (
+            <Link key={project.title} href={`/projects#${project.slug}`} className="work-row work-row-link">
+              <div><p className="eyebrow">{project.type} · {project.period}</p><h3>{project.title}</h3><p>{project.summary}</p></div>
+              <span className="work-row-arrow" aria-hidden="true">↗</span>
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );

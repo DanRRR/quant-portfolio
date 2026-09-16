@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Figure preview coming soon</title>
+  <desc id="desc">Neutral placeholder for a future project figure.</desc>
+  <rect width="960" height="600" fill="#0c1117"/>
+  <g stroke="#26313d" stroke-width="1">
+    <path d="M80 100H880M80 200H880M80 300H880M80 400H880M80 500H880"/>
+    <path d="M160 60V540M320 60V540M480 60V540M640 60V540M800 60V540"/>
+  </g>
+  <rect x="260" y="205" width="440" height="190" rx="12" fill="#111820" stroke="#5ee0a0" stroke-opacity=".55" stroke-width="2"/>
+  <path d="M335 342l82-78 70 58 66-94 72 114" fill="none" stroke="#5ee0a0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="553" cy="228" r="8" fill="#5ee0a0"/>
+  <text x="480" y="454" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="24">FIGURE PREVIEW</text>
+  <text x="480" y="487" text-anchor="middle" fill="#758291" font-family="Arial, sans-serif" font-size="17">COMING SOON</text>
+</svg>

@@ -34,12 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t}else{document.documentElement.dataset.theme=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body>
         <Nav />
-        <main className="flex-1 mx-auto w-full max-w-3xl px-6 py-10">
-          {children}
-        </main>
+        <main className="site-main">{children}</main>
         <Footer />
       </body>
     </html>
