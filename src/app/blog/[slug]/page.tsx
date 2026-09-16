@@ -38,9 +38,16 @@ export default async function PostPage({
       <header className="not-prose mb-8 space-y-1">
         <h1 className="text-3xl font-semibold tracking-tight">{post.title}</h1>
         <div className="text-sm text-[var(--color-fg-muted)]">
-          {post.date}
-          {post.tags && post.tags.length > 0 && (
-            <> · {post.tags.join(", ")}</>
+          {post.category} · {post.date}
+          {post.tags && post.tags.length > 0 && <> · {post.tags.join(", ")}</>}
+          {post.reference && (
+            <>
+              {" "}
+              ·{" "}
+              <a href={post.reference} target="_blank" rel="noreferrer">
+                Paper / repository ↗
+              </a>
+            </>
           )}
         </div>
       </header>

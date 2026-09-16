@@ -11,6 +11,40 @@ export default function ExperiencePage() {
       <section><h2 className="section-heading">Professional experience</h2><Timeline entries={experience} /></section>
       <section><h2 className="section-heading">Education</h2><Timeline entries={education} /></section>
       <section>
+        <h2 className="section-heading">Professional Groups &amp; Memberships</h2>
+        <div className="timeline">
+          <article className="timeline-entry">
+            <p className="date-label">Student Member</p>
+            <div>
+              <h3>
+                <a href="https://lqg.org.uk" target="_blank" rel="noreferrer">
+                  London Quant Group (LQG)
+                </a>
+              </h3>
+              <p>
+                Attend practitioner-led seminars and discussions on quantitative
+                finance, investment research, and portfolio management.
+              </p>
+            </div>
+          </article>
+          <article className="timeline-entry">
+            <p className="date-label">Seminar Participant</p>
+            <div>
+              <h3>
+                <a href="https://thalesians.com/seminars/" target="_blank" rel="noreferrer">
+                  The Thalesians
+                </a>
+              </h3>
+              <p>
+                Attend seminars hosted by a community of professionals interested in
+                artificial intelligence, machine learning, quantitative finance,
+                economics, mathematics, physics, and computer science.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section>
         <h2 className="section-heading">Selected activities</h2>
         <div className="timeline">
           <article className="timeline-entry"><p className="date-label">2025</p><div><h3>Bloomberg Trading Challenge</h3><p className="entry-meta">Participant</p><p>Developed earnings-based ideas and executed long-only equity trades as part of a five-person team.</p></div></article>

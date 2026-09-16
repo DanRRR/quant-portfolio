@@ -1,0 +1,91 @@
+---
+title: "FEB-RN Seminar Notes: Allan Timmermann on Compute, Information Sets, and Learning in Asset Pricing"
+date: "2026-09-10"
+summary: "Seminar notes on compute as a constraint on information processing in asset pricing."
+category: "Seminar Notes"
+tags: ["machine learning", "asset pricing", "compute", "double descent"]
+reference: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6105327"
+---
+
+---
+
+## Summary
+
+The seminar studies **compute as an economic constraint on information processing**.[^1] Investors may observe the same public data but differ in how much useful information they can extract because of differences in computational capacity.
+
+More compute can support richer models, larger information sets, and longer optimisation, but its value depends on whether these gains survive out of sample and translate into net portfolio performance. This creates a trade-off between the **cost of compute** and the **economic value of the information it extracts**.
+
+---
+
+## Core idea
+
+Two investors may observe the same public data $D_t$, but different compute budgets $C$ constrain what they can feasibly learn from it.
+
+Let
+
+$$
+\mathcal{F}(C)
+=
+\{f:\text{ feasible under compute budget }C\}.
+$$
+
+Potentially,
+
+$$
+C_1<C_2
+\quad\Rightarrow\quad
+\mathcal{F}(C_1)\subseteq\mathcal{F}(C_2).
+$$
+
+So the asymmetry is not necessarily **access to information**, but **capacity to process information**.
+
+## Compute and learning
+
+More compute may allow:
+
+- larger models and feature sets;
+- nonlinearities and interactions;
+- longer optimisation;
+- potentially better solutions.
+
+But more compute does **not** imply better out-of-sample performance. Double descent suggests that the relationship between model capacity and generalisation can be non-monotonic.
+
+The relevant question is:
+
+> How much compute extracts economically useful information before additional capacity mainly increases instability or overfitting?
+
+## Portfolio value
+
+Prediction improvements matter only if they survive portfolio construction:
+
+$$
+C \longmapsto U\!\left(\Pi^{\mathrm{net}}(C)\right),
+$$
+
+where $\Pi^{\mathrm{net}}$ accounts for turnover, transaction costs, risk and constraints.
+
+A useful experiment would separately vary information/features, model capacity, and compute/training budget.
+
+## Economic interpretation
+
+Define $V(C)$ as the economic value extracted using compute $C$. A rational investor chooses
+
+$$
+C^*
+=
+\arg\max_C \{V(C)-K(C)\},
+$$
+
+where $K(C)$ is the cost of computation.
+
+Competition, price impact and finite market capacity may generate diminishing returns:
+
+$$
+V'(C)>0,
+\qquad
+V''(C)<0.
+$$
+
+The broader question is whether heterogeneous computational capacity can generate heterogeneous effective information processing even when investors observe the same public data.
+
+[^1]: Timmermann, A., and L. Vulicevic (2026). “Compute, Complexity, and the Scaling Laws of Return Predictability.” SSRN working paper. [https://doi.org/10.2139/ssrn.6105327](https://doi.org/10.2139/ssrn.6105327).

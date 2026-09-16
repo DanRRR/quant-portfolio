@@ -9,7 +9,10 @@ export type PostMeta = {
   title: string;
   date: string;
   summary: string;
+  category: string;
   tags?: string[];
+  reference?: string;
+  published: boolean;
 };
 
 export type Post = PostMeta & { content: string };
@@ -33,11 +36,16 @@ export async function getAllPosts(): Promise<PostMeta[]> {
           title: (data.title as string) ?? slug,
           date: (data.date as string) ?? "",
           summary: (data.summary as string) ?? "",
+          category: (data.category as string) ?? "Research Note",
           tags: (data.tags as string[]) ?? [],
+          reference: (data.reference as string) ?? undefined,
+          published: data.published !== false,
         };
       })
   );
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return posts
+    .filter((post) => post.published)
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
 export async function getPost(slug: string): Promise<Post | null> {
@@ -52,7 +60,10 @@ export async function getPost(slug: string): Promise<Post | null> {
         title: (data.title as string) ?? slug,
         date: (data.date as string) ?? "",
         summary: (data.summary as string) ?? "",
+        category: (data.category as string) ?? "Research Note",
         tags: (data.tags as string[]) ?? [],
+        reference: (data.reference as string) ?? undefined,
+        published: data.published !== false,
         content,
       };
     } catch {

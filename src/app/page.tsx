@@ -74,7 +74,7 @@ export default async function HomePage() {
               className="work-row work-row-link"
             >
               <div>
-                <p className="eyebrow">Research note · {post.date}</p>
+                <p className="eyebrow">{post.category} · {post.date}</p>
                 <h3>{post.title}</h3>
                 <p>{post.summary}</p>
               </div>

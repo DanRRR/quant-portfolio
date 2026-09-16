@@ -216,5 +216,5 @@ export const featuredProjects = projects.filter((project) => project.featured);
 export const skillGroups = [
   { label: "Proficient", values: ["Python", "C", "SQL", "Bash"] },
   { label: "Working knowledge", values: ["C++", "Java", "JavaScript", "HTML/CSS"] },
-  { label: "Languages", values: ["English — fluent", "Thai — fluent"] },
+  { label: "Languages", values: ["English (fluent)", "Thai (fluent)"] },
 ];

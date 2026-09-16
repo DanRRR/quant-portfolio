@@ -25,7 +25,7 @@ export default async function ResearchPage() {
             key={post.slug}
           >
             <div>
-              <p className="eyebrow">Research note · {post.date}</p>
+              <p className="eyebrow">{post.category} · {post.date}</p>
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
               {post.tags?.length ? (

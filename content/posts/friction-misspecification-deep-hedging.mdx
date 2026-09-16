@@ -1,0 +1,79 @@
+---
+title: "Friction Misspecification in Deep Hedging: When Execution Costs Change the Policy"
+date: "2026-09-01"
+summary: "How proportional transaction costs and temporary market impact alter learned option-hedging behaviour, and when misspecified frictions create deployment regret."
+tags: ["deep hedging", "transaction costs", "market impact", "neural networks"]
+reference: "https://github.com/DanRRR/Deep_hedging_with_transaction_costs"
+---
+
+A hedging policy is only useful if it survives the market in which it is deployed. In frictionless models, the main problem is residual risk. With execution costs, the policy must also decide whether a hedge adjustment is worth paying for.
+
+This project studies a sharper form of model risk: **friction misspecification**. A neural network is trained under one execution-cost specification and then deployed under another. The question is not only whether the hedge becomes more expensive, but whether the learned control rule itself changes.
+
+## Discrete-time hedging with frictions
+
+Let $q_k$ be the hedge position immediately after rebalancing date $k$, and let
+
+$$
+ u_k = q_k - q_{k-1}
+$$
+
+be the trade. A simple execution-cost model combines proportional costs and temporary market impact:
+
+$$
+ C_k(u_k) = \lambda_{\mathrm{prop}}\lvert u_k\rvert + \lambda_{\mathrm{imp}}\lvert u_k\rvert^{1+\phi},
+$$
+
+where the first term represents a spread-like cost and the second penalises aggressive hedge adjustments. The quadratic case corresponds to $\phi = 1$.
+
+The network observes the current state, including the underlying price, time to maturity, and current hedge, and outputs the next hedge position. Training minimises an entropic risk objective of the form
+
+$$
+\rho_\alpha(L) = \frac{1}{\alpha}\log\mathbb{E}\left[\exp(\alpha L)\right],
+$$
+
+where $L$ includes the terminal hedging error and cumulative execution costs. The parameter $\alpha$ controls aversion to the right tail of the loss distribution.
+
+## What misspecification means
+
+Let $\hat\theta$ denote the friction parameters assumed during training and $\theta$ the parameters realised at deployment. The deployment regret can be written as
+
+$$
+\mathcal{R}(\hat\theta,\theta)
+= \rho_\alpha\left(L(\pi_{\hat\theta};\theta)\right)
+- \rho_\alpha\left(L(\pi_{\theta};\theta)\right),
+$$
+
+where $\pi_{\hat\theta}$ is the policy trained under the assumed frictions and $\pi_\theta$ is the policy trained under the realised frictions. The diagonal $\hat\theta = \theta$ therefore has zero regret by construction.
+
+This definition separates two effects that are often conflated:
+
+- **Execution loss:** the cost of trading under the realised market friction.
+- **Policy regret:** the additional risk from using a policy trained for the wrong friction.
+
+## Behavioural interpretation
+
+Proportional costs primarily affect the decision to trade. They create an inaction region: small hedge gaps are left uncorrected because the spread cost is not worth paying.
+
+Temporary market impact affects the size of the adjustment. The policy may still trade, but correct only a fraction of the hedge gap in each period. If $q_k^{\star}$ is a frictionless target, a useful local diagnostic is
+
+$$
+\varphi_k = \frac{q_k - q_{k-1}}{q_k^{\star} - q_{k-1}},
+$$
+
+where $\varphi_k = 1$ means full correction and $\varphi_k = 0$ means no adjustment.
+
+## Main lesson
+
+Moderate misspecification around the matched friction level produces relatively limited regret in the studied setting. Large overestimation, however, can suppress trading or delay hedge adjustment, leaving exposures that would have been economical to correct.
+
+The asymmetry matters. Underestimating costs may lead to excessive trading and unnecessary execution loss; overestimating them may create excessive inaction and residual hedging risk. The impact level also matters more directly than the precise impact exponent in the reported experiments.
+
+## What breaks the conclusion
+
+- The analysis isolates a single European option, one underlying, daily rebalancing, and a controlled friction model.
+- Real markets add stochastic volatility, discrete spreads, liquidity variation, jumps, funding costs, and multiple hedging instruments.
+- A policy can be robust to one misspecification dimension and fragile to another.
+- Neural-network performance should therefore be reported across a deployment grid, not only at the training specification.
+
+The full report and implementation are available in the [Deep Hedging with Transaction Costs repository](https://github.com/DanRRR/Deep_hedging_with_transaction_costs).

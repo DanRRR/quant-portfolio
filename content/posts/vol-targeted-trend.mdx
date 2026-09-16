@@ -1,6 +1,7 @@
 ---
 title: "Vol-Targeted Trend Following: Why Volatility Scaling Works"
 date: "2026-05-01"
+published: false
 summary: "The intuition, the maths, and the code behind volatility targeting in cross-asset trend strategies."
 tags: ["trend-following", "volatility", "risk-parity", "futures"]
 ---
@@ -10,7 +11,7 @@ ignore something important: raw position sizes give you wildly different risk de
 which asset and which vol regime you happen to be in.
 
 **Volatility targeting** is the fix. Instead of sizing $N$ contracts, you size so that
-the position's *expected daily P&amp;L standard deviation* equals a fixed target.
+the position's _expected daily P&amp;L standard deviation_ equals a fixed target.
 
 ## The basic idea
 
@@ -30,7 +31,7 @@ $$
 \sigma_{\text{port}} = \sigma^* \sqrt{N}
 $$
 
-So the *annualised* portfolio volatility is $\sigma^* \sqrt{N} \sqrt{252}$. With $\sigma^* = 0.01$
+So the _annualised_ portfolio volatility is $\sigma^* \sqrt{N} \sqrt{252}$. With $\sigma^* = 0.01$
 and $N = 20$ assets that gives roughly 7%. Scale up at the portfolio level to whatever you want.
 
 ## EWMA volatility estimate
@@ -107,7 +108,7 @@ The Sharpe improvement is mostly from the drawdown reduction during high-vol reg
 
 Think about it from a Kelly lens. The Kelly fraction for a bet with edge $\mu$ and
 variance $\sigma^2$ is $f^* = \mu / \sigma^2$. Naïve trend sizing holds $f = \mu /
-(\sigma^2_{\text{typical}})$, which *over-bets* in high-vol and *under-bets* in low-vol.
+(\sigma^2_{\text{typical}})$, which _over-bets_ in high-vol and _under-bets_ in low-vol.
 Vol targeting keeps $f$ closer to Kelly across regimes without needing to estimate $\mu$.
 
 ## What breaks it

@@ -16,6 +16,7 @@ const sections = [
   { id: "basics", label: "Profile" },
   { id: "experience", label: "Experience" },
   { id: "education", label: "Education" },
+  { id: "membership", label: "Memberships" },
   { id: "projects", label: "Projects" },
   { id: "activities", label: "Activities" },
   { id: "skills", label: "Skills" },
@@ -66,6 +67,40 @@ export default function CvPage() {
         <section id="education" className="anchor-section">
           <h2 className="section-heading">Education</h2>
           <Timeline entries={education} />
+        </section>
+        <section id="membership" className="anchor-section">
+          <h2 className="section-heading">Professional Groups &amp; Memberships</h2>
+          <div className="timeline">
+            <article className="timeline-entry">
+              <p className="date-label">Student Member</p>
+              <div>
+                <h3>
+                  <a href="https://lqg.org.uk" target="_blank" rel="noreferrer">
+                    London Quant Group (LQG)
+                  </a>
+                </h3>
+                <p>
+                  Attend practitioner-led seminars and discussions on quantitative
+                  finance, investment research, and portfolio management.
+                </p>
+              </div>
+            </article>
+            <article className="timeline-entry">
+              <p className="date-label">Seminar Participant</p>
+              <div>
+                <h3>
+                  <a href="https://thalesians.com/seminars/" target="_blank" rel="noreferrer">
+                    The Thalesians
+                  </a>
+                </h3>
+                <p>
+                  Attend seminars hosted by a community of professionals interested in
+                  artificial intelligence, machine learning, quantitative finance,
+                  economics, mathematics, physics, and computer science.
+                </p>
+              </div>
+            </article>
+          </div>
         </section>
         <section id="projects" className="anchor-section">
           <h2 className="section-heading">Selected projects</h2>

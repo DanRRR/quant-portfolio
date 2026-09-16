@@ -1,0 +1,58 @@
+---
+title: "Graph Neural Networks for Cross-Sectional Volatility Prediction"
+date: "2026-04-30"
+published: false
+summary: "Do financial relationships improve weekly volatility forecasts, and does the choice of graph change portfolio performance?"
+tags: ["graph neural networks", "volatility", "HAR", "portfolio construction"]
+---
+
+Volatility is easier to forecast than return direction because it clusters through time and propagates across related assets. A graph neural network (GNN) offers a way to encode those cross-sectional relationships when forecasting weekly realised volatility.
+
+## Forecasting target
+
+Let $r_{i,d}$ denote the daily log return of stock $i$ on trading day $d$. For calendar week $t$, the annualised realised-volatility target is
+
+$$
+ y_{i,t+1} = \sqrt{252}\,\operatorname{sd}\left(r_{i,d}: d \in t+1\right),
+$$
+
+with weeks containing fewer than three observations excluded. The one-week shift is important: features available at week $t$ must only predict volatility realised in week $t+1$.
+
+## Why a graph?
+
+At each week, each stock is a node with a feature vector $x_{i,t}$. The graph $G_t = (V, E_t)$ encodes which stocks are allowed to exchange information. A message-passing layer can be written abstractly as
+
+$$
+ h_{i,t}^{(\ell+1)} = \phi\left(W_0^{(\ell)}h_{i,t}^{(\ell)} + \sum_{j \in \mathcal{N}_t(i)} a_{ij,t} W_1^{(\ell)}h_{j,t}^{(\ell)}\right),
+$$
+
+where $a_{ij,t}$ is the edge weight, $\mathcal{N}_t(i)$ is the neighbourhood of stock $i$, and $\phi$ is a nonlinear activation. The final node representation produces a volatility forecast $\hat y_{i,t+1}$.
+
+The graph is therefore not just an architectural detail. It states an economic hypothesis about which relationships contain useful information.
+
+## Three definitions of relatedness
+
+A useful comparison considers three graph constructions under the same modelling and evaluation framework:
+
+- **Correlation graph:** connect stocks whose rolling return correlation exceeds a validation-selected threshold.
+- **Sector graph:** connect stocks sharing a sector classification.
+- **Granger graph:** connect stocks when lagged information from one return or volatility series improves prediction of another, subject to multiple-testing control.
+
+The comparison also includes HAR and LSTM baselines. The HAR benchmark uses volatility at daily, weekly, and monthly horizons:
+
+$$
+ y_{i,t+1} = \beta_{0,i} + \beta_{d,i}x_{i,t}^{(d)} + \beta_{w,i}x_{i,t}^{(w)} + \beta_{m,i}x_{i,t}^{(m)} + \varepsilon_{i,t+1}.
+$$
+
+This makes the GNN comparison more informative: the question is whether cross-sectional message passing adds value beyond strong temporal persistence.
+
+## How to interpret the result
+
+The useful question is not whether a GNN is automatically better than a time-series model. It is whether the graph encodes relationships that add information beyond volatility persistence, and whether any forecast improvement survives portfolio construction, turnover, and transaction costs.
+
+## What can break the result
+
+- **Graph instability:** correlation and Granger edges depend on estimation windows and thresholds.
+- **Sample selection:** a changing universe, missing data, or survivorship bias can make cross-sectional results look stronger than they are.
+- **Validation reuse:** graph thresholds, correction choices, and early stopping are selected through validation, so the number of validation decisions matters.
+- **Portfolio translation:** forecast accuracy and investment performance are different objectives; turnover, leverage, and transaction costs can reverse the ranking.
