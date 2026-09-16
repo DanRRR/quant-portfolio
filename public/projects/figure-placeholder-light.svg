@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Figure preview</title>
+  <desc id="desc">Light placeholder for a project figure.</desc>
+  <rect width="960" height="600" fill="#f7f8fa"/>
+  <g stroke="#dfe4ea" stroke-width="1">
+    <path d="M80 100H880M80 200H880M80 300H880M80 400H880M80 500H880"/>
+    <path d="M160 60V540M320 60V540M480 60V540M640 60V540M800 60V540"/>
+  </g>
+  <text x="480" y="315" text-anchor="middle" fill="#17202b" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="30" letter-spacing="1">FIGURE PREVIEW</text>
+</svg>

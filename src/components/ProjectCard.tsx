@@ -31,29 +31,41 @@ export default function ProjectCard({ project }: { project: Project }) {
     const roomOnLeft = card.left;
     const roomBelow = window.innerHeight - card.bottom;
     const roomAbove = card.top;
-    const clampX = (value: number) => Math.max(halfWidth + edge, Math.min(value, window.innerWidth - halfWidth - edge));
-    const clampY = (value: number) => Math.max(halfHeight + edge, Math.min(value, window.innerHeight - halfHeight - edge));
+    const clampX = (value: number) =>
+      Math.max(
+        halfWidth + edge,
+        Math.min(value, window.innerWidth - halfWidth - edge),
+      );
+    const clampY = (value: number) =>
+      Math.max(
+        halfHeight + edge,
+        Math.min(value, window.innerHeight - halfHeight - edge),
+      );
 
     let left: number;
     let top: number;
 
     if (Math.max(roomOnRight, roomOnLeft) >= width + gap + edge) {
-      left = roomOnRight >= roomOnLeft
-        ? card.right + gap + halfWidth
-        : card.left - gap - halfWidth;
+      left =
+        roomOnRight >= roomOnLeft
+          ? card.right + gap + halfWidth
+          : card.left - gap - halfWidth;
       top = clampY(event.clientY);
     } else if (Math.max(roomBelow, roomAbove) >= height + gap + edge) {
       left = clampX(event.clientX);
-      top = roomBelow >= roomAbove
-        ? card.bottom + gap + halfHeight
-        : card.top - gap - halfHeight;
+      top =
+        roomBelow >= roomAbove
+          ? card.bottom + gap + halfHeight
+          : card.top - gap - halfHeight;
     } else {
-      left = roomOnRight >= roomOnLeft
-        ? window.innerWidth - halfWidth - edge
-        : halfWidth + edge;
-      top = roomBelow >= roomAbove
-        ? window.innerHeight - halfHeight - edge
-        : halfHeight + edge;
+      left =
+        roomOnRight >= roomOnLeft
+          ? window.innerWidth - halfWidth - edge
+          : halfWidth + edge;
+      top =
+        roomBelow >= roomAbove
+          ? window.innerHeight - halfHeight - edge
+          : halfHeight + edge;
     }
 
     previewRef.current.style.left = `${left}px`;
@@ -75,14 +87,34 @@ export default function ProjectCard({ project }: { project: Project }) {
         onPointerMove={movePreview}
         onPointerLeave={() => setPreviewVisible(false)}
       >
-        <div className="project-topline"><span>{project.type}</span><span>{project.period}</span></div>
-        <div className="project-title-row"><h2>{project.title}</h2><span aria-hidden="true">↗</span></div>
+        <div className="project-topline">
+          <span>{project.type}</span>
+          <span>{project.period}</span>
+        </div>
+        <div className="project-title-row">
+          <h2>{project.title}</h2>
+          <span aria-hidden="true">↗</span>
+        </div>
         <p>{project.summary}</p>
-        <div className="tag-list">{project.methods.map((method) => <span key={method}>{method}</span>)}</div>
+        <div className="tag-list">
+          {project.methods.map((method) => (
+            <span key={method}>{method}</span>
+          ))}
+        </div>
         <p className="project-note">{project.note}</p>
       </a>
-      <span ref={previewRef} className="project-cursor-preview" data-visible={previewVisible} aria-hidden="true">
-        <img src={project.preview} alt="" />
+      <span
+        ref={previewRef}
+        className="project-cursor-preview"
+        data-visible={previewVisible}
+        aria-hidden="true"
+      >
+        <img className="project-preview-dark" src={project.preview} alt="" />
+        <img
+          className="project-preview-light"
+          src="/projects/figure-placeholder-light.svg"
+          alt=""
+        />
       </span>
     </div>
   );

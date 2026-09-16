@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description:
     "Quantitative researcher at Bayes Business School. Systematic strategies, stochastic modelling, and machine learning for markets.",
   metadataBase: new URL("https://danruksujarit.com"),
+  icons: {
+    icon: "/logos/transparent_chrome.png",
+  },
   openGraph: {
     title: "Thiraphat (Dan) Ruksujarit — Quantitative Researcher",
     description:
@@ -18,12 +21,15 @@ export const metadata: Metadata = {
     url: "https://danruksujarit.com",
     siteName: "Dan Ruksujarit",
     type: "website",
-    images: [{ url: "/hero.jpg", width: 400, height: 400, alt: "Dan Ruksujarit" }],
+    images: [
+      { url: "/hero.jpg", width: 400, height: 400, alt: "Dan Ruksujarit" },
+    ],
   },
   twitter: {
     card: "summary",
     title: "Dan Ruksujarit — Quantitative Researcher",
-    description: "Systematic strategies, stochastic modelling, and ML for markets.",
+    description:
+      "Systematic strategies, stochastic modelling, and ML for markets.",
     images: ["/hero.jpg"],
   },
 };
