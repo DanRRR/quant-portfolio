@@ -9,4 +9,5 @@
 @import "../styles/timeline.css";
 @import "../styles/home.css";
 @import "../styles/lists.css";
+@import "../styles/article.css";
 /* Legacy theme, parked 2026-10-22: src/styles/legacy/globals.legacy.css (not imported). */
