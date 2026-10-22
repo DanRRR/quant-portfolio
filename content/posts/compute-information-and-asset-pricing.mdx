@@ -1,25 +1,103 @@
 ---
-title: "FEB-RN Seminar Notes: Allan Timmermann on Compute, Information Sets, and Learning in Asset Pricing"
+title: "FEB-RN Seminar Notes: Allan Timmermann on Compute, Complexity, and the Scaling Laws of Return Predictability"
 date: "2026-09-10"
 summary: "Seminar notes on compute as a constraint on information processing in asset pricing."
 category: "Seminar Notes"
-tags: ["machine learning", "asset pricing", "compute", "double descent"]
+tags:
+  [
+    "machine learning",
+    "value of data",
+    "asset pricing",
+    "compute",
+    "double descent",
+  ]
 reference: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6105327"
 ---
 
-These are selective personal notes from the seminar, not a transcript. I distinguish the paper's central argument from my own interpretation and proposed extensions below.
+These are selective personal notes summarised from the seminar, not a transcript.
 
 ---
 
-## Summary
+# Summary
 
-The seminar studies **compute as an economic constraint on information processing**.[^1] Investors may observe the same public data but differ in how much useful information they can extract because of differences in computational capacity.
+The seminar[^1] studies **compute as an economic constraint on information processing**. Investors may observe the same public data but differ in how much useful information they can extract because of differences in computational capacity.
 
 More compute can support richer models, larger information sets, and longer optimisation, but its value depends on whether these gains survive out of sample and translate into net portfolio performance. This creates a trade-off between the **cost of compute** and the **economic value of the information it extracts**.
 
 ---
 
-## Core idea
+# Core idea
+
+The core parameterisation presented was
+
+$$
+
+L(c) = L_{\infty} + \Bigl(\frac{c}{c_0}\Bigr)^{-\alpha},
+
+
+$$
+
+where $L_{\infty}$ is the irreducible loss floor for the dataset or model setting,
+$c$ is compute, and $c_0$ is a reference compute scale. The exponent $\alpha > 0$
+controls the rate of improvement.
+
+The power law implies diminishing returns to compute:
+
+$$
+c \uparrow
+\quad\Rightarrow\quad
+L(c) \downarrow,
+\qquad
+L(c) \to L_{\infty}.
+$$
+
+Compute was discussed in terms of **PetaFLOP-days**, i.e. floating-point operations aggregated over training time.
+
+## Does scaling transfer to finance?
+
+It is not obvious that ML scaling laws transfer directly to financial data. Financial returns have dependence, non-stationarity, low signal-to-noise ratios, and much smaller effective sample sizes.
+
+Their results show feed-forward neural networks diminishing returns to compute, considered through both
+prediction loss (MSE) and economic performance (Sharpe ratio).
+
+This is related to, but distinct from, model complexity: more compute can support larger models, longer training, larger information sets, and more extensive optimisation.
+
+## Double descent and optimisation
+
+Classical Bias-variance suggests a U-shaped relationship between model complexity and test error. **Double descent** allows test error to fall again beyond the interpolation region in sufficiently overparameterised models.
+
+A separate issue is **training risk**: different optimisation runs may converge to different solutions and therefore different out-of-sample performance. This is not the same phenomenon as double descent.
+
+Greater parameterisation may also alter the geometry of the loss landscape.
+In their experiment, the 1M-parameter model exhibits a substantially smoother
+and flatter local test loss landscape than the 200-parameter model, indicating
+lower sensitivity to parameter perturbations.
+This suggests that overparameterisation may produce more stable optimisation geometry
+despite increasing model complexity. However, larger models also incur greater computational
+cost, creating a trade-off between the potential benefits of increased model capacity and the
+compute required to achieve them.
+
+## Economic interpretation
+
+The Grossman-Stiglitz (CITE) analogy is:
+
+$$
+\text{same public data}
++
+\text{different compute}
+\Rightarrow
+\text{different information-processing ability}.
+$$
+
+An investor facing limited compute may rationally use a smaller dataset, simpler information set, or simpler model because additional information is costly to process.
+
+**Note**: Flexible models may also extract nonlinearities and interactions unavailable to simple ridge-regression specifications.
+
+## Asset pricing implication
+
+If compute affects signal quality and trading decisions, it may ultimately affect equilibrium prices. This provides a possible microfoundation for heterogeneous information processing and raises the idea of **market-implied compute**: using market outcomes to indirectly infer the value or extent of computational processing.
+
+The empirical question is therefore not simply whether more compute lowers loss, but whether it produces stable improvements in out-of-sample long-short performance after costs and constraints.
 
 Two investors may observe the same public data $D_t$, but different compute budgets $C$ constrain what they can feasibly learn from it.
 
@@ -69,6 +147,17 @@ where $\Pi^{\mathrm{net}}$ accounts for turnover, transaction costs, risk and co
 A useful experiment would separately vary information/features, model capacity, and compute/training budget.
 
 ## My interpretation
+
+This motivates an optimal-compute problem:
+
+$$
+
+C^* = \arg\max_C \{V(C)-K(C)\},
+
+
+$$
+
+where $V(C)$ is the economic value extracted from computation and $K(C)$ its cost.
 
 Define $V(C)$ as the economic value extracted using compute $C$. A rational investor chooses
 

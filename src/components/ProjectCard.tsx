@@ -8,6 +8,7 @@ type Project = {
   period: string;
   type: string;
   github: string;
+  detailHref?: string;
   preview: string;
   summary: string;
   methods: string[];
@@ -17,6 +18,7 @@ type Project = {
 export default function ProjectCard({ project }: { project: Project }) {
   const previewRef = useRef<HTMLSpanElement>(null);
   const [previewVisible, setPreviewVisible] = useState(false);
+  const isExternal = !project.detailHref;
 
   const movePreview = (event: PointerEvent<HTMLAnchorElement>) => {
     if (event.pointerType !== "mouse" || !previewRef.current) return;
@@ -77,9 +79,9 @@ export default function ProjectCard({ project }: { project: Project }) {
       <a
         className="project-card"
         id={project.slug}
-        href={project.github}
-        target="_blank"
-        rel="noreferrer"
+        href={project.detailHref ?? project.github}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noreferrer" : undefined}
         onPointerEnter={(event) => {
           if (event.pointerType === "mouse") setPreviewVisible(true);
           movePreview(event);

@@ -24,6 +24,12 @@ export default async function HomePage() {
             className="portrait"
           />
           <p className="portrait-caption">London, UK</p>
+          <p className="hero-memberships">
+            <span className="hero-memberships-label">Community member</span>
+            <a href="https://lqg.org.uk/" target="_blank" rel="noreferrer">London Quant Group</a>
+            <span aria-hidden="true"> · </span>
+            <a href="https://thalesians.com/seminars/" target="_blank" rel="noreferrer">The Thalesians</a>
+          </p>
         </div>
         <div className="intro-copy">
           <p className="eyebrow">Quantitative finance · Computer science</p>
@@ -54,7 +60,11 @@ export default async function HomePage() {
               <p className="date-label">{item.period}</p>
               <div>
                 <h3>{item.title}</h3>
-                <p>{item.organisation}</p>
+                <p>
+                  <a href={item.href} target="_blank" rel="noreferrer">
+                    {item.organisation}
+                  </a>
+                </p>
               </div>
             </article>
           ))}

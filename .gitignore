@@ -22,3 +22,6 @@ venv/
 .turbo
 next-env.d.ts
 *.log
+
+# brainstorming mockups (superpowers visual companion)
+.superpowers/
