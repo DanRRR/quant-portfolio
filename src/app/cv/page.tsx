@@ -1,6 +1,7 @@
 import SectionHeading from "@/components/SectionHeading";
 import Timeline from "@/components/Timeline";
-import CvSectionNav from "@/components/CvSectionNav";
+import PageShell from "@/components/PageShell";
+// import CvSectionNav from "@/components/CvSectionNav"; // superseded by SectionNav via PageShell (minimal theme, 2026-10-22)
 import {
   education,
   experience,
@@ -24,31 +25,30 @@ const sections = [
 
 export default function CvPage() {
   return (
-    <div className="cv-page">
+    <PageShell sections={sections} download={{ href: links.cv, label: "Download PDF ↗" }}>
+      {/* Old sidebar, parked 2026-10-22 — the rail now comes from PageShell:
       <aside className="cv-nav" aria-label="CV sections">
         <CvSectionNav sections={sections} />
-        <a
-          className="download-link"
-          href={links.cv}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className="download-link" href={links.cv} target="_blank" rel="noreferrer">
           Download PDF ↗
         </a>
       </aside>
-      <div className="cv-content page-stack">
+      */}
+      <div className="page">
         <SectionHeading
           eyebrow="Web résumé"
           title="Curriculum Vitae"
           description="A concise record of my education, experience, and technical work."
         />
-        <section id="basics" className="anchor-section">
-          <h2 className="section-heading">Profile</h2>
+        <section id="basics" className="section">
+          <div className="section-title-row">
+            <h2>Profile</h2>
+          </div>
           <dl className="basics-grid">
             <dt>Name</dt>
             <dd>{profile.name}</dd>
             <dt>Email</dt>
-            <dd>
+            <dd className="u">
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
             </dd>
             <dt>Location</dt>
@@ -60,17 +60,27 @@ export default function CvPage() {
             </dd>
           </dl>
         </section>
-        <section id="experience" className="anchor-section">
-          <h2 className="section-heading">Experience</h2>
-          <Timeline entries={experience} />
+        <section id="experience" className="section">
+          <div className="section-title-row">
+            <h2>Experience</h2>
+          </div>
+          <div className="u">
+            <Timeline entries={experience} />
+          </div>
         </section>
-        <section id="education" className="anchor-section">
-          <h2 className="section-heading">Education</h2>
-          <Timeline entries={education} />
+        <section id="education" className="section">
+          <div className="section-title-row">
+            <h2>Education</h2>
+          </div>
+          <div className="u">
+            <Timeline entries={education} />
+          </div>
         </section>
-        <section id="membership" className="anchor-section">
-          <h2 className="section-heading">Professional Groups &amp; Memberships</h2>
-          <div className="timeline">
+        <section id="membership" className="section">
+          <div className="section-title-row">
+            <h2>Professional Groups &amp; Memberships</h2>
+          </div>
+          <div className="timeline u">
             <article className="timeline-entry">
               <p className="date-label">Student Member</p>
               <div>
@@ -102,26 +112,28 @@ export default function CvPage() {
             </article>
           </div>
         </section>
-        <section id="projects" className="anchor-section">
-          <h2 className="section-heading">Selected projects</h2>
-          <div className="work-list">
-            {featuredProjects.map((project) => (
-              <article className="work-row" key={project.title}>
-                <div>
-                  <p className="eyebrow">{project.period}</p>
-                  <h3>{project.title}</h3>
-                  <p>{project.summary}</p>
-                </div>
-              </article>
-            ))}
+        <section id="projects" className="section">
+          <div className="section-title-row">
+            <h2>Selected projects</h2>
           </div>
+          {featuredProjects.map((project) => (
+            <article className="row" key={project.title}>
+              <p className="eyebrow" style={{ margin: 0 }}>{project.period}</p>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+            </article>
+          ))}
         </section>
-        <section id="activities" className="anchor-section">
-          <h2 className="section-heading">Activities and achievements</h2>
+        <section id="activities" className="section">
+          <div className="section-title-row">
+            <h2>Activities and achievements</h2>
+          </div>
           <Timeline entries={leadershipActivities} />
         </section>
-        <section id="skills" className="anchor-section">
-          <h2 className="section-heading">Skills and languages</h2>
+        <section id="skills" className="section">
+          <div className="section-title-row">
+            <h2>Skills and languages</h2>
+          </div>
           <dl className="basics-grid">
             {skillGroups.map((group) => (
               <div className="contents" key={group.label}>
@@ -132,6 +144,6 @@ export default function CvPage() {
           </dl>
         </section>
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -1,3 +1,4 @@
+// Superseded by SectionNav.tsx (minimal theme, 2026-10-22). Kept for reference; not imported.
 "use client";
 
 import { useEffect, useRef, useState } from "react";

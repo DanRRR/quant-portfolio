@@ -1,0 +1,77 @@
+/* Timeline (Experience, CV): a two-column text table separated by hairlines.
+   Targets the existing Timeline component markup. */
+.timeline {
+  border-top: 1px solid var(--border-strong);
+}
+.timeline-entry {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-entry .date-label {
+  margin: 0;
+  padding-top: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.timeline-entry h3 {
+  margin: 0;
+}
+.timeline-entry .entry-meta,
+.timeline-entry p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.timeline-entry .detail-list {
+  margin: 0;
+  padding-left: 15px;
+  font-size: 14px;
+  color: var(--fg);
+}
+.timeline-entry .detail-list li {
+  margin: 0.15rem 0;
+}
+@media (max-width: 560px) {
+  .timeline-entry {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* Definition grids (CV profile, skills). */
+.basics-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.4rem 1.2rem;
+  margin: 0;
+  font-size: 14px;
+}
+.basics-grid dt {
+  padding-top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.basics-grid dd {
+  margin: 0;
+}
+.contents {
+  display: contents;
+}
+@media (max-width: 560px) {
+  .basics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+  .basics-grid dd {
+    margin-bottom: 0.6rem;
+  }
+}

@@ -1,0 +1,114 @@
+/* "On this page" rail — the CV section nav, generalised and shrunk to live beside the column. */
+.rail {
+  position: sticky;
+  top: calc(var(--header-h) + 28px);
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+.rail .eyebrow {
+  margin-bottom: 0.6rem;
+}
+.rail-list {
+  --row: 2.2rem;
+  position: relative;
+  display: grid;
+  border-left: 1px solid var(--border);
+}
+.rail-list a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--row);
+  padding-left: 0.8rem;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.3;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+.rail-list a:hover {
+  color: var(--fg);
+  transform: translateX(2px);
+}
+.rail-list a.is-active {
+  color: var(--accent);
+}
+.rail-indicator {
+  --active-index: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: -1px;
+  width: 2px;
+  height: var(--row);
+  background: var(--accent);
+  transform: translateY(calc(var(--active-index) * var(--row)));
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.rail .download-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 13px;
+  color: var(--accent);
+}
+/* Anchor jumps land below the sticky header (and the strip on narrow screens). */
+.col [id] {
+  scroll-margin-top: calc(var(--header-h) + 2rem);
+}
+
+@media (max-width: 1000px) {
+  .rail {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 40;
+    padding: 0.5rem 0 0;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .rail .eyebrow,
+  .rail .download-link {
+    display: none;
+  }
+  .rail-list {
+    --row: auto;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    column-gap: 1.1rem;
+    overflow-x: auto;
+    border-left: 0;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .rail-list::-webkit-scrollbar {
+    display: none;
+  }
+  .rail-list a {
+    display: block;
+    min-height: auto;
+    padding: 0 0 0.6rem;
+    white-space: nowrap;
+    transform: none !important;
+  }
+  .rail-indicator {
+    top: auto;
+    bottom: -1px;
+    left: 0;
+    width: var(--w, 3rem);
+    height: 2px;
+    transform: translateX(var(--x, 0px));
+    transition:
+      transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      width 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .col [id] {
+    scroll-margin-top: calc(var(--header-h) + 3.2rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-list a,
+  .rail-indicator {
+    transition: none;
+  }
+}
