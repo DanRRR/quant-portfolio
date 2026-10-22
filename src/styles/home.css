@@ -1,0 +1,46 @@
+/* Home page: portrait kept (rounded, slightly desaturated), everything else flat. */
+.intro {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.portrait {
+  display: block;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  filter: saturate(0.7);
+}
+.portrait-caption {
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.text-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.2rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+}
+.hero-memberships {
+  margin: 1rem 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.hero-memberships-label {
+  display: inline;
+}
+.hero-memberships-label::after {
+  content: " ";
+}
+@media (max-width: 560px) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+}
