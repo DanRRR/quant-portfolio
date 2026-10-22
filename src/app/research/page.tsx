@@ -1,47 +1,43 @@
-import Link from "next/link";
+import PageShell from "@/components/PageShell";
 import SectionHeading from "@/components/SectionHeading";
+import { ListItem, YearGroup } from "@/components/YearList";
+import { formatDateShort, groupByYear, yearOf } from "@/lib/listing";
 import { getAllPosts } from "@/lib/posts";
 
 export const metadata = { title: "Research" };
 
 export default async function ResearchPage() {
   const posts = await getAllPosts();
+  const groups = groupByYear(posts, (post) => yearOf(post.date));
+  const sections = groups.map((group) => ({ id: `y-${group.year}`, label: group.year }));
   return (
-    <div className="page-stack research-page">
-      <SectionHeading
-        eyebrow="Curiosity"
-        title="Research"
-        description="Technical Notes"
-      />
-      <div className="notice">
-        <strong>Working collection.</strong> Notes are being expanded with exact
-        data provenance, implementation links, diagnostics, and limitations.
-      </div>
-      <div className="work-list">
-        {posts.map((post) => (
-          <Link
-            className="work-row work-row-link"
-            href={`/blog/${post.slug}`}
-            key={post.slug}
-          >
-            <div>
-              <p className="eyebrow">{post.category} · {post.date}</p>
-              <h2>{post.title}</h2>
-              <p>{post.summary}</p>
-              {post.tags?.length ? (
-                <div className="tag-list">
-                  {post.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <span className="work-row-arrow" aria-hidden="true">
-              ↗
-            </span>
-          </Link>
+    <PageShell sections={sections}>
+      <div className="page">
+        <SectionHeading
+          eyebrow="Curiosity"
+          title="Research"
+          description="Technical Notes"
+        />
+        <p className="intro-note">
+          <strong>Working collection.</strong> Notes are being expanded with exact
+          data provenance, implementation links, diagnostics, and limitations.
+        </p>
+        {groups.map((group) => (
+          <YearGroup year={group.year} key={group.year}>
+            {group.items.map((post) => (
+              <ListItem
+                key={post.slug}
+                meta={`${formatDateShort(post.date)} · ${post.category}`}
+                title={post.title}
+                href={`/blog/${post.slug}`}
+                summary={post.summary}
+                foot={post.tags?.length ? post.tags.join(" · ") : undefined}
+              />
+            ))}
+          </YearGroup>
         ))}
+        {posts.length === 0 && <p className="intro-note">No notes yet.</p>}
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -1,3 +1,4 @@
+// Superseded by YearList items on /projects (minimal theme, 2026-10-22). Kept for reference; not imported.
 "use client";
 
 import { useRef, useState, type PointerEvent } from "react";

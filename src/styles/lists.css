@@ -1,0 +1,56 @@
+/* Year-grouped lists (Research, Projects): his index idiom with Inter titles. */
+.intro-note {
+  margin: 0 0 40px;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.year-group + .year-group .year {
+  margin-top: 2.2rem;
+}
+.year {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--faint);
+}
+.post-row {
+  margin-bottom: 25px;
+}
+.post-date {
+  margin: 4px 0;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.post-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.post-title a {
+  display: inline-block;
+}
+.post-subtitle {
+  margin: 4px 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.tags {
+  margin: 0;
+  font-size: 12px;
+  color: var(--faint);
+}
+.tags a {
+  color: var(--muted);
+}

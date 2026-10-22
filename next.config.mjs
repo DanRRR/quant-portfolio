@@ -14,6 +14,10 @@ const nextConfig = {
   experimental: {
     mdxRs: false,
   },
+  // The blog index moved to /research (minimal theme, 2026-10-22); post URLs are unchanged.
+  async redirects() {
+    return [{ source: "/blog", destination: "/research", permanent: true }];
+  },
 };
 
 const withMDX = createMDX({
