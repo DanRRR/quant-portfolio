@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ConnectomeFilm from "@/components/ConnectomeFilm";
+import "./connectome.css";
 
 export const metadata = {
   title: "Connectome — Stateful Market Prediction",

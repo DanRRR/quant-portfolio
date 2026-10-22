@@ -1,0 +1,38 @@
+/* Footer: hairline above, small faint text, same width as the shell. */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  color: var(--faint);
+  font-size: 12px;
+}
+.footer-inner {
+  width: min(100% - 2rem, var(--shell));
+  margin-inline: auto;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+.footer-links a {
+  color: var(--faint);
+}
+.footer-links a:hover {
+  color: var(--fg);
+}
+@media (max-width: 1000px) {
+  .footer-inner {
+    width: min(100% - 2rem, var(--col));
+  }
+}
+@media (max-width: 560px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-block: 0.9rem;
+  }
+}

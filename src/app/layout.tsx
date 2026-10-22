@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// import "../styles/legacy/globals.legacy.css"; // parked 2026-10-22, see docs/superpowers/specs/2026-10-22-minimal-theme-design.md
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
