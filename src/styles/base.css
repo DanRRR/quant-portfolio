@@ -112,6 +112,7 @@ a.u:focus-visible::after {
   align-items: start;
 }
 .layout > .col {
+  grid-column: 2;
   min-width: 0;
 }
 @media (max-width: 1000px) {
@@ -120,6 +121,9 @@ a.u:focus-visible::after {
   }
   .layout {
     grid-template-columns: 1fr;
+  }
+  .layout > .col {
+    grid-column: 1;
   }
 }
 

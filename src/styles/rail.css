@@ -4,6 +4,11 @@
   top: calc(var(--header-h) + 28px);
   padding-top: clamp(3rem, 6vw, 4.5rem);
 }
+/* SectionNav renders nothing for fewer than two sections; hide the empty aside
+   so it is not a blank sticky band on narrow screens. */
+.rail:empty {
+  display: none;
+}
 .rail .eyebrow {
   margin-bottom: 0.6rem;
 }

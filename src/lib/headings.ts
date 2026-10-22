@@ -1,5 +1,9 @@
 export type Heading = { id: string; label: string };
 
+/** Anchor id for the text before a post's first heading. Contains "_", which
+ *  `slugify` never emits, so a body heading titled "Introduction" cannot collide. */
+export const INTRO_ANCHOR_ID = "_intro";
+
 /** Remove inline markdown/math markers, leaving plain words. */
 function stripInline(text: string): string {
   return text

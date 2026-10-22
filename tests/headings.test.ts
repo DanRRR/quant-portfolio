@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  INTRO_ANCHOR_ID,
   slugify,
   extractHeadings,
   remarkSectionHeadings,
@@ -71,5 +72,16 @@ test("remarkSectionHeadings demotes h1 and assigns ids matching extractHeadings"
       [2, "core-idea-2"],
       [3, undefined],
     ],
+  );
+});
+
+test("INTRO_ANCHOR_ID can never collide with a heading slug", () => {
+  // slugs are [a-z0-9-] only, so an id containing another character is safe
+  assert.match(INTRO_ANCHOR_ID, /[^a-z0-9-]/);
+  assert.notEqual(slugify("Introduction"), INTRO_ANCHOR_ID);
+  assert.notEqual(slugify("_intro"), INTRO_ANCHOR_ID);
+  assert.deepEqual(
+    extractHeadings("## Introduction\n\n## Results\n").map((h) => h.id),
+    ["introduction", "results"],
   );
 });

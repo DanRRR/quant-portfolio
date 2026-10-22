@@ -6,7 +6,7 @@ import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
 import Figure from "@/components/Figure";
 import PageShell from "@/components/PageShell";
-import { extractHeadings, remarkSectionHeadings } from "@/lib/headings";
+import { INTRO_ANCHOR_ID, extractHeadings, remarkSectionHeadings } from "@/lib/headings";
 import { formatDateLong } from "@/lib/listing";
 import { getAllPosts, getPost } from "@/lib/posts";
 import { profile } from "@/data/site";
@@ -39,7 +39,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   const sections = [
-    { id: "introduction", label: "Introduction" },
+    { id: INTRO_ANCHOR_ID, label: "Introduction" },
     ...extractHeadings(post.content),
   ];
   const referenceLabel = post.reference?.includes("github.com") ? "GitHub ↗" : "Paper ↗";
@@ -84,7 +84,7 @@ export default async function PostPage({
           </div>
         </header>
         <div className="article">
-          <div id="introduction">
+          <div id={INTRO_ANCHOR_ID}>
             <MDXRemote
               source={post.content}
               components={{ Figure }}

@@ -48,7 +48,10 @@ export default function SectionNav({ sections, download }: Props) {
       const list = listRef.current;
       const link = list?.querySelector<HTMLAnchorElement>(`a[href="#${current.id}"]`);
       if (list && link) {
-        setStrip({ x: link.offsetLeft - list.scrollLeft, w: link.offsetWidth });
+        // The indicator is absolutely positioned inside the scrolling list, so it
+        // already moves with the content; offsetLeft alone is the right x.
+        const next = { x: link.offsetLeft, w: link.offsetWidth };
+        setStrip((prev) => (prev.x === next.x && prev.w === next.w ? prev : next));
       }
     };
 
@@ -84,17 +87,14 @@ export default function SectionNav({ sections, download }: Props) {
 
     elements.forEach((element) => revealObserver.observe(element));
     updateActiveSection();
-    const list = listRef.current;
     window.addEventListener("scroll", updateActiveSection, { passive: true });
     window.addEventListener("resize", updateActiveSection);
-    list?.addEventListener("scroll", updateActiveSection, { passive: true });
 
     return () => {
       revealObserver.disconnect();
       headerObserver?.disconnect();
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
-      list?.removeEventListener("scroll", updateActiveSection);
     };
   }, [sections]);
 

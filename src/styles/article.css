@@ -129,7 +129,11 @@
   font-weight: bold;
 }
 
-/* Code: bracketed by rules, no background, ink only. */
+/* Code: bracketed by rules, no background, ink only.
+   rehype-pretty-code wraps each <pre> in <figure>; zero the UA 1em 40px margin. */
+.article [data-rehype-pretty-code-figure] {
+  margin: 0;
+}
 .article pre {
   margin: 24px 0;
   padding: 12px 0;
