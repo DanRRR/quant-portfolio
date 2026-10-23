@@ -10,9 +10,11 @@ export default function Nav() {
         </Link>
         <div className="nav-actions">
           <ul className="nav-links">
+            {/* Experience folded into the CV page, 2026-10-23 (/experience redirects to /cv):
             <li>
               <Link href="/experience">Experience</Link>
             </li>
+            */}
             <li>
               <Link href="/research">Research</Link>
             </li>

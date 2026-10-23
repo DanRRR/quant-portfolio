@@ -1,4 +1,147 @@
 /* Home page: portrait kept (rounded, slightly desaturated), everything else flat. */
+
+/* Hero fills the first screen (2026-10-23): the visitor sees who first; the rail and
+   the Current / Research / Projects sections begin below the fold. */
+/* Scroll snapping (2026-10-23): the hero and the content block are the two snap points,
+   so a scroll from the hero settles on the content and vice versa. "proximity" rather
+   than "mandatory" keeps the long content below freely scrollable. Only the home page
+   defines snap areas, so this has no effect on other pages. */
+html {
+  scroll-snap-type: y proximity;
+}
+.hero {
+  scroll-snap-align: start;
+  /* The header sits above the hero in flow, so without this the hero's snap point is
+     one header-height down and the page refuses to rest at scrollY 0 (fixed 2026-10-23). */
+  scroll-margin-top: var(--header-h);
+  scroll-snap-stop: always;
+  /* border-box so the padding is inside the viewport height; without it the hero
+     overflowed by its own padding (fixed 2026-10-23). */
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--header-h));
+  padding-bottom: 5.5rem; /* room for the scroll cue */
+}
+/* "↓ Scroll": centred at the bottom of the hero, bouncing, in the heading face. */
+.scroll-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--faint);
+  animation: cue-bounce 1s infinite;
+  transition: color 180ms ease;
+}
+.scroll-cue:hover {
+  color: var(--fg);
+}
+@keyframes cue-bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.home-after {
+  scroll-snap-align: start;
+  scroll-margin-top: var(--header-h);
+}
+/* Smoother hand-over: as the page scrolls, the hero copy drifts up and fades while the
+   cue fades out, driven by scroll position (browsers without scroll-driven animations
+   simply skip this). */
+@supports (animation-timeline: scroll()) {
+  .hero .intro {
+    animation: hero-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 70vh;
+  }
+  .scroll-cue {
+    animation:
+      cue-bounce 1s infinite,
+      cue-fade linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, 0 25vh;
+  }
+}
+@keyframes hero-drift {
+  to {
+    opacity: 0.15;
+    transform: translateY(-32px);
+  }
+}
+@keyframes cue-fade {
+  to {
+    opacity: 0;
+  }
+}
+/* Hero composition (2026-10-23): the hero has no rail beside it, so it uses the full
+   shell width; portrait, name and links scale up to fill the screen. */
+.layout > .hero {
+  grid-column: 1 / -1;
+}
+.hero .intro {
+  grid-template-columns: minmax(200px, 300px) 1fr;
+  gap: clamp(3rem, 8vw, 7rem); /* was clamp(2.5rem, 6vw, 5rem); spread out 2026-10-23 */
+  align-items: center;
+}
+.hero .portrait {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 18px;
+}
+.hero .portrait-caption {
+  margin-top: 14px;
+  font-size: 12px;
+}
+.hero h1 {
+  margin-bottom: 2.25rem;
+  font-size: clamp(2.8rem, 7.5vw, 5.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em; /* a touch looser than body headings at this size */
+}
+.hero .text-links {
+  gap: 0.75rem 2rem;
+  margin-top: 2.25rem;
+  font-size: 1.05rem;
+}
+.hero .hero-memberships {
+  margin-top: 2rem;
+  font-size: 14px;
+}
+@media (max-width: 560px) {
+  .hero .intro {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+  .hero .portrait {
+    max-width: 180px;
+  }
+}
+/* The hero already filled the screen; the body needs less top padding than other pages. */
+.home-body {
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue,
+  .hero .intro {
+    animation: none;
+  }
+}
 .intro {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -11,7 +154,7 @@
   height: 160px;
   object-fit: cover;
   border-radius: 14px;
-  filter: saturate(0.7);
+  /* filter: saturate(0.7); — removed 2026-10-23, read as a faded/translucent photo */
 }
 .portrait-caption {
   margin: 6px 0 0;

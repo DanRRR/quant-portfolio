@@ -20,11 +20,10 @@ type ListItemProps = {
   foot?: React.ReactNode;
 };
 
-/** Date/category line, bold title link, one-line summary, faint footer line. */
+/** Bold title link, then date/category line, one-line summary, faint footer line (reordered 2026-10-23). */
 export function ListItem({ id, meta, title, href, external, summary, foot }: ListItemProps) {
   return (
     <div className="post-row u" id={id}>
-      <p className="post-date">{meta}</p>
       <p className="post-title">
         {external ? (
           <a href={href} target="_blank" rel="noreferrer">
@@ -34,6 +33,7 @@ export function ListItem({ id, meta, title, href, external, summary, foot }: Lis
           <Link href={href}>{title}</Link>
         )}
       </p>
+      <p className="post-date">{meta}</p>
       <p className="post-subtitle">{summary}</p>
       {foot ? <p className="tags">{foot}</p> : null}
     </div>

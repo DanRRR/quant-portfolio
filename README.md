@@ -14,12 +14,12 @@ quant-portfolio/
 │   │   ├── blog/[slug]/        # Post page (MDX). /blog itself redirects to /research
 │   │   ├── projects/           # Year-grouped list of projects
 │   │   │   └── connectome/     # Case-study page with its own film + connectome.css
-│   │   ├── experience/, cv/    # Timeline pages
+│   │   ├── cv/                 # Timeline page (experience/ kept but redirects here)
 │   │   └── globals.css         # Imports the stylesheets in src/styles
 │   ├── styles/                 # tokens, base, nav, footer, rail, timeline, home, lists, article
 │   │   └── legacy/             # globals.legacy.css — the pre-2026-10 theme, parked, not imported
 │   ├── components/             # Nav, ThemeToggle, Footer, PageShell, SectionNav, YearList, Figure, Timeline
-│   ├── data/site.ts            # Profile, experience, education, projects, skills
+│   ├── data/site.ts            # Profile, experience, education, memberships, projects, skills
 │   └── lib/                    # posts.ts (MDX loader), listing.ts (dates/years), headings.ts (rail + remark plugin)
 ├── content/posts/*.mdx         # Posts (front matter: title, date, summary, category, tags, reference, published)
 ├── tests/*.test.ts             # node:test unit tests for src/lib

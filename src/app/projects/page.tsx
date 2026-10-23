@@ -15,7 +15,7 @@ export default function ProjectsPage() {
     <PageShell sections={sections}>
       <div className="page">
         <SectionHeading
-          eyebrow="Selected technical work"
+          /* eyebrow="Selected technical work" — removed 2026-10-23 */
           title="Projects"
           description="Applied work across forecasting, machine learning, and quantitative finance."
         />

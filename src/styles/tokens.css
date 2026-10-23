@@ -8,6 +8,7 @@
   --border: rgba(0, 0, 0, 0.12);
   --border-strong: rgba(0, 0, 0, 0.22);
   --accent: #087f5b;
+  --link: #087f5b; /* in-sentence links: accent green (blue #0969da tried 2026-10-23, Dan prefers green) */
 
   --font-sans:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -32,6 +33,7 @@
   --border: rgba(255, 255, 255, 0.14);
   --border-strong: rgba(255, 255, 255, 0.26);
   --accent: #5ee0a0;
+  --link: #5ee0a0; /* blue #58a6ff tried 2026-10-23 */
   color-scheme: dark;
 }
 :root[data-theme="light"] {

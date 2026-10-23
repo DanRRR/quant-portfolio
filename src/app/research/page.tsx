@@ -14,13 +14,15 @@ export default async function ResearchPage() {
     <PageShell sections={sections}>
       <div className="page">
         <SectionHeading
-          eyebrow="Curiosity"
+          /* eyebrow="Curiosity" — removed 2026-10-23 */
           title="Research"
           description="Technical Notes"
         />
-        <p className="intro-note">
+        {/* Longer note, shortened 2026-10-23:
           <strong>Working collection.</strong> Notes are being expanded with exact
-          data provenance, implementation links, diagnostics, and limitations.
+          data provenance, implementation links, diagnostics, and limitations. */}
+        <p className="intro-note">
+          <strong>Working collection.</strong> Notes are still being expanded.
         </p>
         {groups.map((group) => (
           <YearGroup year={group.year} key={group.year}>

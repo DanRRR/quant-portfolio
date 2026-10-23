@@ -99,6 +99,43 @@ a.u:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
+/* Resting underline, tried and parked 2026-10-23 (too busy):
+.u a::before,
+a.u::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.18rem;
+  left: 0;
+  height: 1px;
+  background: var(--border-strong);
+  transition: opacity 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.u a:hover::before,
+.u a:focus-visible::before,
+a.u:hover::before,
+a.u:focus-visible::before {
+  opacity: 0;
+}
+*/
+/* Links set inside running text are coloured at rest so they read as links without
+   an underline (2026-10-23). Standalone links (titles, the contact row, "All" links)
+   stay ink: their placement already says they are clickable. */
+.hero-memberships a,
+.timeline-entry .entry-meta a,
+.timeline-entry .detail-list a,
+.byline a,
+.intro-note a {
+  --accent: var(--link); /* their hover sweep and focus ring follow the link colour */
+  color: var(--link);
+  /* Resting green underline tried and removed 2026-10-23 (kept: colour + hover sweep):
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--link) 60%, transparent);
+  text-underline-offset: 0.18rem;
+  transition: text-decoration-color 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  — and the matching :hover/:focus-visible rule set text-decoration-color: transparent. */
+}
 
 /* Shell: nav, rail and column centred as one unit. */
 .shell {
@@ -163,28 +200,38 @@ a.u:focus-visible::after {
   color: var(--muted);
 }
 .row {
-  margin-bottom: 1.1rem;
+  margin-bottom: 2rem; /* was 1.1rem; widened 2026-10-23 */
 }
 .row h3 {
-  margin: 2px 0 0;
+  margin: 0;
 }
 .row p {
   margin: 2px 0 0;
   font-size: 14px;
 }
+/* Date/category line sits under the title and matches the research page's .post-date
+   (2026-10-23). .row p would otherwise win on font-size, so restate it here. */
+.row .post-date {
+  margin: 4px 0;
+  font-size: 12px;
+}
 .row h3 a {
   display: inline-block;
 }
+/* Dark-mode dimming of the portrait, removed 2026-10-23 with the light-mode filter:
 :root[data-theme="dark"] .portrait {
   filter: saturate(0.7) brightness(0.92);
 }
+*/
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .u a::after,
-  a.u::after {
+  a.u::after,
+  .u a::before,
+  a.u::before {
     transition: none;
   }
 }

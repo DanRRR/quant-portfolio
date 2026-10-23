@@ -16,7 +16,10 @@ const nextConfig = {
   },
   // The blog index moved to /research (minimal theme, 2026-10-22); post URLs are unchanged.
   async redirects() {
-    return [{ source: "/blog", destination: "/research", permanent: true }];
+    return [
+      { source: "/blog", destination: "/research", permanent: true },
+      { source: "/experience", destination: "/cv", permanent: true }, // folded into the CV, 2026-10-23
+    ];
   },
 };
 

@@ -16,7 +16,7 @@ export const links = {
 export type TimelineEntry = {
   period: string;
   title: string;
-  organisation: string;
+  organisation?: string; // optional since 2026-10-23: memberships put the organisation in the title
   location?: string;
   href?: string;
   details: string[];
@@ -90,7 +90,27 @@ export const leadershipActivities: TimelineEntry[] = [
     organisation: "University of Leeds Muay Thai Society",
     details: [
       "Managed society operations and engagement.",
-      "Won gold in the 57.1–60 kg male category at the Muaythai GB University Championships (British Nationals).",
+      "Won gold in the [57.1–60 kg male category at the Muaythai GB University Championships (British Nationals)](https://www.kihapp.com/tournaments/13350-mtgb-university-championships-2024/competitors/575461-dan-ruksujarit), sanctioned by [Muaythai GB](https://www.muaythaigb.org).",
+    ],
+  },
+];
+
+/** Professional groups. Rendered through Timeline: title is the organisation (linked), period is the role. */
+export const memberships: TimelineEntry[] = [
+  {
+    period: "Student Member",
+    title: "London Quant Group (LQG)",
+    href: "https://lqg.org.uk",
+    details: [
+      "Attend practitioner-led seminars and discussions on quantitative finance, investment research, and portfolio management.",
+    ],
+  },
+  {
+    period: "Seminar Participant",
+    title: "The Thalesians",
+    href: "https://thalesians.com/seminars/",
+    details: [
+      "Attend seminars hosted by a community of professionals interested in artificial intelligence, machine learning, quantitative finance, economics, mathematics, physics, and computer science.",
     ],
   },
 ];

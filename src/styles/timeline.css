@@ -3,6 +3,7 @@
 .timeline {
   border-top: 1px solid var(--border-strong);
 }
+/* Two-column layout (period left, body right), parked 2026-10-23:
 .timeline-entry {
   display: grid;
   grid-template-columns: 150px 1fr;
@@ -10,9 +11,13 @@
   padding: 16px 0;
   border-bottom: 1px solid var(--border);
 }
+*/
+.timeline-entry {
+  padding: 22px 0; /* was 16px; widened 2026-10-23 */
+  border-bottom: 1px solid var(--border);
+}
 .timeline-entry .date-label {
-  margin: 0;
-  padding-top: 3px;
+  margin: 4px 0;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0.02em;
@@ -37,12 +42,44 @@
 .timeline-entry .detail-list li {
   margin: 0.15rem 0;
 }
+/* Links inside bullets can wrap onto a second line, where the absolutely positioned
+   .u a::after underline cannot follow. Use a background-size animation instead
+   (added 2026-10-23), with a faint static underline so they read as links at rest. */
+.timeline-entry .detail-list a {
+  position: static;
+  /* text-decoration: underline; text-decoration-color: var(--border-strong);
+     text-underline-offset: 0.18rem;  — static underline parked 2026-10-23 */
+  text-decoration: none;
+  padding-bottom: 1px;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.timeline-entry .detail-list a::after,
+.timeline-entry .detail-list a::before {
+  content: none;
+}
+.timeline-entry .detail-list a:hover,
+.timeline-entry .detail-list a:focus-visible {
+  background-size: 100% 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-entry .detail-list a {
+    transition: none;
+  }
+}
+/* Parked 2026-10-23 with the grid above:
 @media (max-width: 560px) {
   .timeline-entry {
     grid-template-columns: 1fr;
     gap: 4px;
   }
 }
+*/
 
 /* Definition grids (CV profile, skills). */
 .basics-grid {

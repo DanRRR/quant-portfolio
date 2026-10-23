@@ -73,17 +73,21 @@
   border: 0;
   border-top: 1px solid var(--border);
 }
-/* Links inside prose use a plain static underline, not the animated one. */
+/* Links inside prose: coloured at rest, underlined on hover (2026-10-23; the previous
+   rule gave them a static hairline underline instead). */
 .article p a,
 .article li a,
 .article [data-footnotes] a {
-  text-decoration: underline;
-  text-decoration-color: var(--border-strong);
-  text-underline-offset: 2px;
+  --accent: var(--link);
+  color: var(--link);
+  text-decoration: none;
+  text-underline-offset: 0.18rem;
 }
 .article p a:hover,
-.article li a:hover {
-  color: var(--muted);
+.article li a:hover,
+.article [data-footnotes] a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--link);
 }
 .article strong {
   font-weight: 600;

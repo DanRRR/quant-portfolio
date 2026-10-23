@@ -7,7 +7,7 @@
   color: var(--muted);
 }
 .year-group + .year-group .year {
-  margin-top: 2.2rem;
+  margin-top: 2.6rem; /* was 2.2rem */
 }
 .year {
   margin: 0 0 0.6rem;
@@ -20,7 +20,7 @@
   color: var(--faint);
 }
 .post-row {
-  margin-bottom: 25px;
+  margin-bottom: 36px; /* was 25px; widened 2026-10-23 */
 }
 .post-date {
   margin: 4px 0;
